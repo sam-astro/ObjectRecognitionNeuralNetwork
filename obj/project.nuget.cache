@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uiaQfUZbrqznuxk4T6IypdPDcGWPJ3PxCR6f5zJeNTwI624pHgz0Kf/fFT/iBKGw6wsQsn23p94Q3Os6HYdt9g==",
+  "dgSpecHash": "FgPHXPyRiVsgl66rpeAY4+WAmLv9rmbWsjPWJv3ZWRB72Ipw4zE9vLchGnhRAGHE5NVhQZhQ+CSg6ATx23J/Kg==",
   "success": true,
-  "projectFilePath": "D:\\Code\\FaceRecognitionNeuralNetwork\\NeuralNetConsoleCS.csproj",
+  "projectFilePath": "D:\\Code\\ObjectRecognitionNeuralNetwork\\NeuralNetConsoleCS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\samda\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\samda\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",

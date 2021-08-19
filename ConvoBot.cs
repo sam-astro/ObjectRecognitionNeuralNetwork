@@ -35,7 +35,7 @@ public class ConvoBot
 				}
 			}
 			float[] outputs = net.FeedForward(inputs);
-			answer = outputs[0]*10;
+			answer = outputs[0] * 10;
 			//for (int i = 0; i < 10; i++)
 			//{
 			//	answer += Math.Abs(outputs[i]/10);
@@ -91,7 +91,8 @@ public class ConvoBot
 		//	net.SetFitness((((float)amountCorrect / (float)promptObject.amountOfPrompts) * 100) + (int)(new Random().Next(-50, 50) / 1000.0f));
 		//net.SetFitness(((float)amountCorrect / (float)promptObject.amountOfPrompts) * 100);
 		//net.AddFitness(((float)amountCorrect) * 100);
-		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct.");
+		if (amountCorrect > promptObject.AmountOfPrompts() - 25)
+			Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct.");
 		failed = true;
 	}
 
