@@ -35,7 +35,7 @@ public class ConvoBot
 				}
 			}
 			float[] outputs = net.FeedForward(inputs);
-			answer = outputs[0] * 3;
+			answer = outputs[0] * 4;
 			//for (int i = 0; i < 10; i++)
 			//{
 			//	answer += Math.Abs(outputs[i]/10);

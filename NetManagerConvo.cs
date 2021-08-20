@@ -14,7 +14,7 @@ public class NetManagerConvo
 	private bool networksRunning = false;
 	public int populationSize = 100;
 	private int generationNumber = 1;
-	public int[] layers = new int[] { 784, 20, 60, 20, 1 }; // No. of inputs and No. of outputs
+	public int[] layers = new int[] { 784, 60, 120, 120, 60, 1 }; // No. of inputs and No. of outputs
 	private List<NeuralNetwork> nets;
 	public List<ConvoBot> entityList = null;
 	bool startup = true;
