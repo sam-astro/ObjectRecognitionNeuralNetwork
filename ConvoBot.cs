@@ -23,7 +23,7 @@ public class ConvoBot
 
 			prompt = promptObject.GetPrompt(l);
 
-			float[] inputs = new float[784];
+			float[] inputs = new float[4096];
 			for (int x = 0; x < prompt.Length; x++)
 			{
 				for (int y = 0; y < prompt[x].Length; y++)
@@ -31,11 +31,11 @@ public class ConvoBot
 					if (y == 0)
 						inputs[x] = prompt[x][y];
 					else
-						inputs[(28 * (y - 1)) + x] = prompt[x][y];
+						inputs[(64 * (y - 1)) + x] = prompt[x][y];
 				}
 			}
 			float[] outputs = net.FeedForward(inputs);
-			answer = outputs[0] * 4;
+			answer = Math.Abs(outputs[0]) * 4;
 			//for (int i = 0; i < 10; i++)
 			//{
 			//	answer += Math.Abs(outputs[i]/10);

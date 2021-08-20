@@ -21,16 +21,16 @@ public class Prompt
 	}
 
 
-	public static byte[][] pixels = new byte[28][];
+	public static byte[][] pixels = new byte[64][];
 	public byte[][] GetPrompt(int l)
 	{
 		string[] TrainingFiles = Directory.GetFiles(".\\humansdataset\\");
 		
 		for (int i = 0; i < pixels.Length; ++i)
-			pixels[i] = new byte[28];
+			pixels[i] = new byte[64];
 
 		Bitmap original = (Bitmap)Image.FromFile(TrainingFiles[l]);
-		Bitmap resized = new Bitmap(original, new Size(28, 28));
+		Bitmap resized = new Bitmap(original, new Size(64, 64));
 
 		for (int x = 0; x < resized.Width; x++)
 		{

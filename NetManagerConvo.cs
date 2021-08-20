@@ -16,7 +16,7 @@ public class NetManagerConvo
 	private bool networksRunning = false;
 	public int populationSize = 100;
 	private int generationNumber = 1;
-	public int[] layers = new int[] { 784, 60, 120, 120, 60, 1 }; // No. of inputs and No. of outputs
+	public int[] layers = new int[] { 4096, 120, 120, 120, 60, 1 }; // No. of inputs and No. of outputs
 	private List<NeuralNetwork> nets;
 	public List<ConvoBot> entityList = null;
 	bool startup = true;
@@ -33,7 +33,7 @@ public class NetManagerConvo
 	float highestFitness = 0;
 	float lowestFitness = 100000;
 
-	bool queuedForUpload = false;
+	bool queuedForUpload = true;
 
 	public void NeuralManager()
 	{
@@ -107,13 +107,26 @@ public class NetManagerConvo
 
 		try
 		{
-			Download(bestLocalFitness);
+			System.Net.WebClient Client = new System.Net.WebClient();
+			string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+			if (s != null)
+			{
+				if (float.Parse(s) > highestFitness / 100)
+					Download(highestFitness / 100);
+				else if (float.Parse(s) < highestFitness / 100)
+					Upload(highestFitness / 100);
+			}
 		}
 		catch (Exception)
 		{
-			using (StreamWriter outputFile = new StreamWriter(".\\dat\\WeightSave.dat", true))
+			try
 			{
-				outputFile.Write("0#0");
+				File.OpenText(".\\dat\\WeightSaveMeta.meta");
+			}
+			catch (Exception)
+			{
+				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 			}
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
@@ -160,7 +173,7 @@ public class NetManagerConvo
 				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
 				Console.ResetColor();
 			}
-			else if ((highestFitness / 100) > lastBest || (queuedForUpload == true && generationNumber % 5 == 0))
+			else if ((highestFitness / 100) > lastBest || (queuedForUpload == true && generationNumber % 2 == 0))
 			{
 				StreamWriter persistence = new StreamWriter(".\\dat\\WeightSaveMeta.meta");
 				persistence.WriteLine((generationNumber).ToString() + "#" + (highestFitness / 100).ToString());
@@ -188,6 +201,15 @@ public class NetManagerConvo
 				}
 				catch (Exception)
 				{
+					try
+					{
+						File.OpenText(".\\dat\\WeightSaveMeta.meta");
+					}
+					catch (Exception)
+					{
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+					}
 					queuedForUpload = true;
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("Failed to connect to server, continuing as normal.");
@@ -242,13 +264,7 @@ public class NetManagerConvo
 			//    nets[i].SetFitness(0f);
 			//}
 
-			amntLeft = populationSize;
-			networksRunning = true;
-			lastBest = (highestFitness / 100);
-			lastWorst = (lowestFitness / 100);
-			generationNumber++;
-
-			if (generationNumber % 50 == 0)
+			if (generationNumber % 5 == 0)
 			{
 				try
 				{
@@ -256,19 +272,34 @@ public class NetManagerConvo
 					string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 					if (s != null)
 					{
-						if (float.Parse(s) > bestLocalFitness)
-							Download(bestLocalFitness);
-						else if (float.Parse(s) < bestLocalFitness)
+						if (float.Parse(s) > highestFitness / 100)
+							Download(highestFitness / 100);
+						else if (float.Parse(s) < highestFitness / 100)
 							Upload(highestFitness/100);
 					}
 				}
 				catch (Exception)
 				{
+					try
+					{
+						File.OpenText(".\\dat\\WeightSaveMeta.meta");
+					}
+					catch (Exception)
+					{
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+					}
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
 					Console.ResetColor();
 				}
 			}
+
+			amntLeft = populationSize;
+			networksRunning = true;
+			lastBest = (highestFitness / 100);
+			lastWorst = (lowestFitness / 100);
+			generationNumber++;
 		}
 	}
 
@@ -436,13 +467,17 @@ public class NetManagerConvo
 		string s = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
 
 		// Upload weight save meta
-		Client = new System.Net.WebClient();
-		Client.Headers.Add("enctype", "multipart/form-data");
-		result = Client.UploadFile("http://achillium.us.to/objectrecognitionneuralnetdata/uploadweights.php", "POST", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
-		s = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
+		System.Net.WebClient ClientTwo = new System.Net.WebClient();
+		ClientTwo.Headers.Add("enctype", "multipart/form-data");
+		byte[] resultTwo = ClientTwo.UploadFile("http://achillium.us.to/objectrecognitionneuralnetdata/uploadweights.php", "POST", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
+		string sTwo = System.Text.Encoding.UTF8.GetString(resultTwo, 0, resultTwo.Length);
 
 		File.Move(".\\dat\\" + fitness + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
 		File.Move(".\\dat\\" + fitness + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine("📶 Synced with server 📶");
+		Console.ResetColor();
 	}
 
 	static void Download(float bestLocalFitness)
