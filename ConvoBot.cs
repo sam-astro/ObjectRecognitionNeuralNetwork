@@ -35,20 +35,20 @@ public class ConvoBot
 				}
 			}
 			float[] outputs = net.FeedForward(inputs);
-			answer = outputs[0] * 10;
+			answer = outputs[0] * 3;
 			//for (int i = 0; i < 10; i++)
 			//{
 			//	answer += Math.Abs(outputs[i]/10);
 			//}
 
 			//float guessScore = (float)(Math.Round((promptObject.CheckCorrectness(answer)) * 100) / 100);
-			if (Math.Round(answer) == 1 && promptObject.PromptType() == "HUMAN")
+			if (answer > 0.5f && answer < 1f && promptObject.PromptType() == "HUMAN")
 			{
 				amountCorrect++;
 				//net.AddFitness(Math.Clamp(answer, 0, 1000) * 100);
 				net.AddFitness(((float)100 / (float)promptObject.AmountOfPrompts()) * (float)100);
 			}
-			else if (Math.Round(answer) == 0 && promptObject.PromptType() == "NON-HUMAN")
+			else if (answer < 0.5f && answer > 0f && promptObject.PromptType() == "NON-HUMAN")
 			{
 				amountCorrect++;
 				//net.AddFitness(Math.Abs(Math.Clamp(1 - answer, -1000, 1)) * 100);
@@ -91,8 +91,8 @@ public class ConvoBot
 		//	net.SetFitness((((float)amountCorrect / (float)promptObject.amountOfPrompts) * 100) + (int)(new Random().Next(-50, 50) / 1000.0f));
 		//net.SetFitness(((float)amountCorrect / (float)promptObject.amountOfPrompts) * 100);
 		//net.AddFitness(((float)amountCorrect) * 100);
-		if (amountCorrect > promptObject.AmountOfPrompts() - 25)
-			Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct.");
+		//if (amountCorrect > promptObject.AmountOfPrompts() - 25)
+		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct.");
 		failed = true;
 	}
 

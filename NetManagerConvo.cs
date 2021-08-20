@@ -134,7 +134,7 @@ public class NetManagerConvo
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
 			Console.ResetColor();
-			throw;
+			//throw;
 		}
 
 		InitEntityNeuralNetworks();
@@ -347,8 +347,6 @@ public class NetManagerConvo
 			Parallel.For(0, (populationSize - 2) / 2, i =>
 			{
 				nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
-				nets[i].Mutate();
-				nets[i].Mutate();
 				nets[i].Mutate();
 
 				nets[i + (populationSize - 2) / 2] = new NeuralNetwork(nets[populationSize - 1]);
