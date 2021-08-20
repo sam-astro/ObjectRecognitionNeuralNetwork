@@ -24,9 +24,9 @@ namespace TechnetSamples
 			webRequest.Method = "POST";
 			webRequest.ContentType = "multipart/form-data; boundary=" + boundary;
 
-			string FilePath = ".\\dat\\weightpersistence.dat";
+			string FilePath = ".\\dat\\WeightSave.dat";
 			formData.Clear();
-			formData["name"] = "weightpersistence.dat";
+			formData["name"] = "WeightSave.dat";
 			formData["ReplaceAll"] = "false";
 
 			Stream postDataStream = GetPostStream(FilePath, formData, boundary);

@@ -16,7 +16,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 
     public float GetWeightFromPersistence(int x, int y, int z)
     {
-        StreamReader sr = File.OpenText(".\\dat\\weightpersistence.dat");
+        StreamReader sr = File.OpenText(".\\dat\\WeightSave.dat");
         string[] alllines = sr.ReadToEnd().Split('\n');
 
         foreach (string line in alllines)
@@ -140,7 +140,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     /// </summary>
     private void InitWeights(float[][][] persistenceWeights)
     {
-        StreamReader streamReader = File.OpenText(".\\dat\\weightpersistence.dat");
+        StreamReader streamReader = File.OpenText(".\\dat\\WeightSave.dat");
         string[] lines = streamReader.ReadToEnd().Split('\n');
         streamReader.Close();
 
