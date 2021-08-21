@@ -33,7 +33,7 @@ public class NetManagerConvo
 	float highestFitness = 0;
 	float lowestFitness = 100000;
 
-	bool queuedForUpload = true;
+	bool queuedForUpload = false;
 
 	public void NeuralManager()
 	{
