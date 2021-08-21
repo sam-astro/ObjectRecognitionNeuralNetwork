@@ -521,7 +521,5 @@ public class NetManagerConvo
 		Console.ForegroundColor = ConsoleColor.Green;
 		Console.WriteLine("📶 Synced with server 📶");
 		Console.ResetColor();
-		var info = new System.Diagnostics.ProcessStartInfo(Environment.GetCommandLineArgs()[0]);
-		System.Diagnostics.Process.Start(info);
 	}
 }
