@@ -478,23 +478,33 @@ public class NetManagerConvo
 
 	static void Upload(float fitness)
 	{
+		Console.ForegroundColor = ConsoleColor.Magenta;
+
 		File.Move(".\\dat\\WeightSave.dat", ".\\dat\\" + fitness + "_WeightSave.dat");
+		Console.WriteLine("Moved \".\\dat\\WeightSave.dat\" to \".\\dat\\" + fitness + "_WeightSave.dat\"");
 		File.Move(".\\dat\\WeightSaveMeta.meta", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
+		Console.WriteLine("Moved \".\\dat\\WeightSaveMeta.meta\" to \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
 		// Upload weight save
+		Console.WriteLine("Uploading \".\\dat\\" + fitness + "_WeightSave.dat\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
 		System.Net.WebClient Client = new System.Net.WebClient();
 		Client.Headers.Add("enctype", "multipart/form-data");
 		byte[] result = Client.UploadFile("http://achillium.us.to/objectrecognitionneuralnetdata/uploadweights.php", "POST", ".\\dat\\" + fitness + "_WeightSave.dat");
 		string s = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
+		Console.WriteLine("Uploaded \".\\dat\\" + fitness + "_WeightSave.dat\"");
 
 		// Upload weight save meta
+		Console.WriteLine("Uploading \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
 		System.Net.WebClient ClientTwo = new System.Net.WebClient();
 		ClientTwo.Headers.Add("enctype", "multipart/form-data");
 		byte[] resultTwo = ClientTwo.UploadFile("http://achillium.us.to/objectrecognitionneuralnetdata/uploadweights.php", "POST", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
 		string sTwo = System.Text.Encoding.UTF8.GetString(resultTwo, 0, resultTwo.Length);
+		Console.WriteLine("Uploaded \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
 		File.Move(".\\dat\\" + fitness + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+		Console.WriteLine("Moved \".\\dat\\" + fitness + "_WeightSave.dat\" to \".\\dat\\WeightSave.dat\"");
 		File.Move(".\\dat\\" + fitness + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+		Console.WriteLine("Moved \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to \".\\dat\\WeightSaveMeta.meta\"");
 
 		Console.ForegroundColor = ConsoleColor.Green;
 		Console.WriteLine("📶 Synced with server 📶");
@@ -503,10 +513,16 @@ public class NetManagerConvo
 
 	static void Download(string s)
 	{
+		Console.ForegroundColor = ConsoleColor.Magenta;
+
 		System.Net.WebClient Client = new System.Net.WebClient();
 
+		Console.WriteLine("Downloading \"" + s + "_WeightSave.dat\" from http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat");
 		Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat"), @".\dat\temp_WeightSave.dat");
+		Console.WriteLine("Downloaded \"" + s + "_WeightSave.dat\"");
+		Console.WriteLine("Downloading \"" + s + "_WeightSaveMeta.meta\" from http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta");
 		Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta"), @".\dat\temp_WeightSaveMeta.meta");
+		Console.WriteLine("Downloaded \"" + s + "_WeightSaveMeta.meta\"");
 
 		if (File.Exists(".\\dat\\temp_WeightSave.dat"))
 		{
