@@ -382,7 +382,7 @@ public class NetManagerConvo
 		{
 			Parallel.For(0, (populationSize - 2) / 2, i =>
 			{
-				Console.WriteLine("* Processing net " + i);
+				Console.WriteLine("* Restarting net " + i + " of " + (populationSize - 2) / 2);
 				nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
 				nets[i].Mutate();
 
@@ -397,7 +397,7 @@ public class NetManagerConvo
 		{
 			Parallel.For(0, (populationSize - 2) / 2, i =>
 			{
-				Console.WriteLine("* Processing net " + i);
+				Console.WriteLine("* Restarting net " + i + " of " + (populationSize - 2) / 2);
 				nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
 
 				nets[i].RandomizeWeights();
