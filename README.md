@@ -9,4 +9,4 @@ To run, simply open <code>/Executable/</code>, then run <code>NeuralNetConsoleCS
 I finally added networking, so you no longer need to send me <code>/Executable/dat/WeightSave.dat</code>! Now, as long as you have an internet connection, the weights file will be automatically uploaded to my server (when it makes progress).
 
 ## The current best fitness is: <b>74.89%</b>
-You only need to send me the weights file if your fitness is bigger than this one. I'll keep this up to date with each network evolution.
+Your clients' fitness will stay up to date with this, and this everyone elses highest fitness because of the networking I added. I'll keep this up to date with each network evolution.
