@@ -381,7 +381,7 @@ public class NetManagerConvo
 		Console.WriteLine("* Copying weights and mutating networks...");
 		Parallel.For(0, (populationSize - 2) / 2, i =>
 		{
-			nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
+			nets[i] = new NeuralNetwork(nets[populationSize-1]);     //Copies weight values from top half networks to worst half
 			nets[i].Mutate();
 
 			nets[i + (populationSize - 2) / 2] = new NeuralNetwork(nets[populationSize - 1]);
