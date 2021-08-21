@@ -196,23 +196,34 @@ public class NetManagerConvo
 
 				try
 				{
-					Upload(highestFitness/100);
-					Console.ForegroundColor = ConsoleColor.Green;
-					Console.WriteLine("Successfully uploaded save to server. Continuing.");
-					Console.ResetColor();
-					queuedForUpload = false;
+					System.Net.WebClient Client = new System.Net.WebClient();
+					string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+					if (s != null)
+					{
+						if (float.Parse(s) > bestLocalFitness)
+							Download(s);
+						else if (float.Parse(s) < bestLocalFitness)
+							Upload(bestLocalFitness);
+					}
 				}
 				catch (Exception)
 				{
-					if(!File.Exists(".\\dat\\WeightSaveMeta.meta"))
+					if (File.Exists(".\\dat\\temp_WeightSave.dat"))
 					{
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+						if (File.Exists(".\\dat\\WeightSave.dat"))
+							File.Delete(".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
 					}
-					queuedForUpload = true;
+					if (File.Exists(".\\dat\\temp_WeightSaveMeta.meta"))
+					{
+						if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
+							File.Delete(".\\dat\\WeightSaveMeta.meta");
+						File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+					}
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("Failed to connect to server, continuing as normal.");
+					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
 					Console.ResetColor();
+					//throw;
 				}
 			}
 			else
