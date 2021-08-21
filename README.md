@@ -8,5 +8,5 @@ I finally added networking, so you no longer need to send me <code>/Executable/d
 
 To increase performance, the images it is getting trained on are not shown. If you want to see how much the network knows, I just added a viewer program. You can run it at <code>/Executable/ObjectDetectionWeightPreviewer.exe</code>, then load in any image you want!
 
-## The current best fitness is: <b>48.97%</b>
+## The current best fitness is: <b>51.11%</b>
 Your clients' fitness will stay up to date with this, and this everyone elses highest fitness because of the networking I added. I'll keep this up to date with each network evolution.
