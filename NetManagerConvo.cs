@@ -112,18 +112,24 @@ public class NetManagerConvo
 			if (s != null)
 			{
 				if (float.Parse(s) > highestFitness / 100)
-					Download(highestFitness / 100);
+					Download(s);
 				else if (float.Parse(s) < highestFitness / 100)
 					Upload(highestFitness / 100);
 			}
 		}
 		catch (Exception)
 		{
-
-			if (!File.Exists(".\\dat\\WeightSaveMeta.meta"))
+			if (File.Exists(".\\dat\\temp_WeightSave.dat"))
 			{
-				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
-				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
+				if (File.Exists(".\\dat\\WeightSave.dat"))
+					File.Delete(".\\dat\\WeightSave.dat");
+				File.Move(".\\dat\\temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
+			}
+			if (File.Exists(".\\dat\\temp_WeightSaveMeta.meta"))
+			{
+				if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
+					File.Delete(".\\dat\\WeightSaveMeta.meta");
+				File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 			}
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
@@ -200,8 +206,8 @@ public class NetManagerConvo
 				{
 					if(!File.Exists(".\\dat\\WeightSaveMeta.meta"))
 					{
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 					}
 					queuedForUpload = true;
 					Console.ForegroundColor = ConsoleColor.Red;
@@ -266,18 +272,24 @@ public class NetManagerConvo
 					if (s != null)
 					{
 						if (float.Parse(s) > highestFitness / 100)
-							Download(highestFitness / 100);
+							Download(s);
 						else if (float.Parse(s) < highestFitness / 100)
 							Upload(highestFitness/100);
 					}
 				}
 				catch (Exception)
 				{
-
-					if (!File.Exists(".\\dat\\WeightSaveMeta.meta"))
+					if (File.Exists(".\\dat\\temp_WeightSave.dat"))
 					{
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
+						if (File.Exists(".\\dat\\WeightSave.dat"))
+							File.Delete(".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
+					}
+					if (File.Exists(".\\dat\\temp_WeightSaveMeta.meta"))
+					{
+						if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
+							File.Delete(".\\dat\\WeightSaveMeta.meta");
+						File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 					}
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
@@ -470,26 +482,30 @@ public class NetManagerConvo
 		Console.ResetColor();
 	}
 
-	static void Download(float bestLocalFitness)
+	static void Download(string s)
 	{
 		System.Net.WebClient Client = new System.Net.WebClient();
-		string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
-		if (s != null)
-			if (float.Parse(s) > bestLocalFitness)
-			{
-				Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat"), @".\dat\WeightSave.dat.temp");
-				Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta"), @".\dat\WeightSaveMeta.meta.temp");
 
-				if (File.Exists(".\\dat\\WeightSave.dat.temp"))
-					File.Move(".\\dat\\WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
-				if (File.Exists(".\\dat\\WeightSaveMeta.meta.temp"))
-					File.Move(".\\dat\\WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
+		Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat"), @".\dat\temp_WeightSave.dat");
+		Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta"), @".\dat\temp_WeightSaveMeta.meta");
 
-				Console.ForegroundColor = ConsoleColor.Green;
-				Console.WriteLine("📶 Synced with server 📶");
-				Console.ResetColor();
-				var info = new System.Diagnostics.ProcessStartInfo(Environment.GetCommandLineArgs()[0]);
-				System.Diagnostics.Process.Start(info);
-			}
+		if (File.Exists(".\\dat\\temp_WeightSave.dat"))
+		{
+			if (File.Exists(".\\dat\\WeightSave.dat"))
+				File.Delete(".\\dat\\WeightSave.dat");
+			File.Move(".\\dat\\temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
+		}
+		if (File.Exists(".\\dat\\temp_WeightSaveMeta.meta"))
+		{
+			if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
+				File.Delete(".\\dat\\WeightSaveMeta.meta");
+			File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+		}
+
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine("📶 Synced with server 📶");
+		Console.ResetColor();
+		var info = new System.Diagnostics.ProcessStartInfo(Environment.GetCommandLineArgs()[0]);
+		System.Diagnostics.Process.Start(info);
 	}
 }
