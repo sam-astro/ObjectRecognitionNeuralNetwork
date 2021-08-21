@@ -107,8 +107,12 @@ public class NetManagerConvo
 
 		try
 		{
+			Console.ForegroundColor = ConsoleColor.Cyan;
+			Console.WriteLine("Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 			System.Net.WebClient Client = new System.Net.WebClient();
 			string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+			Console.WriteLine("Got highest fitness, it is: " + s);
+			Console.ResetColor();
 			if (s != null)
 			{
 				if (float.Parse(s) > bestLocalFitness)
@@ -196,8 +200,12 @@ public class NetManagerConvo
 
 				try
 				{
+					Console.ForegroundColor = ConsoleColor.Cyan;
+					Console.WriteLine("Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 					System.Net.WebClient Client = new System.Net.WebClient();
 					string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+					Console.WriteLine("Got highest fitness, it is: " + s);
+					Console.ResetColor();
 					if (s != null)
 					{
 						if (float.Parse(s) > bestLocalFitness)
@@ -278,8 +286,12 @@ public class NetManagerConvo
 			{
 				try
 				{
+					Console.ForegroundColor = ConsoleColor.Cyan;
+					Console.WriteLine("Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 					System.Net.WebClient Client = new System.Net.WebClient();
 					string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+					Console.WriteLine("Got highest fitness, it is: " + s);
+					Console.ResetColor();
 					if (s != null)
 					{
 						if (float.Parse(s) > highestFitness / 100)
