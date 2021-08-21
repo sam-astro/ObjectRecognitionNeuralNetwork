@@ -119,14 +119,11 @@ public class NetManagerConvo
 		}
 		catch (Exception)
 		{
-			try
+
+			if (!File.Exists(".\\dat\\WeightSaveMeta.meta"))
 			{
-				File.OpenText(".\\dat\\WeightSaveMeta.meta");
-			}
-			catch (Exception)
-			{
-				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
-				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
+				File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
 			}
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
@@ -201,14 +198,10 @@ public class NetManagerConvo
 				}
 				catch (Exception)
 				{
-					try
+					if(!File.Exists(".\\dat\\WeightSaveMeta.meta"))
 					{
-						File.OpenText(".\\dat\\WeightSaveMeta.meta");
-					}
-					catch (Exception)
-					{
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
 					}
 					queuedForUpload = true;
 					Console.ForegroundColor = ConsoleColor.Red;
@@ -280,14 +273,11 @@ public class NetManagerConvo
 				}
 				catch (Exception)
 				{
-					try
+
+					if (!File.Exists(".\\dat\\WeightSaveMeta.meta"))
 					{
-						File.OpenText(".\\dat\\WeightSaveMeta.meta");
-					}
-					catch (Exception)
-					{
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
-						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
+						File.Move(".\\dat\\" + (highestFitness / 100) + "_WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
 					}
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
@@ -487,10 +477,13 @@ public class NetManagerConvo
 		if (s != null)
 			if (float.Parse(s) > bestLocalFitness)
 			{
-				File.Delete(".\\dat\\WeightSave.dat");
-				Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat"), @".\dat\WeightSave.dat");
-				File.Delete(".\\dat\\WeightSaveMeta.meta");
-				Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta"), @".\dat\WeightSaveMeta.meta");
+				Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat"), @".\dat\WeightSave.dat.temp");
+				Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta"), @".\dat\WeightSaveMeta.meta.temp");
+
+				if (File.Exists(".\\dat\\WeightSave.dat.temp"))
+					File.Move(".\\dat\\WeightSave.dat.temp", ".\\dat\\WeightSave.dat");
+				if (File.Exists(".\\dat\\WeightSaveMeta.meta.temp"))
+					File.Move(".\\dat\\WeightSaveMeta.meta.temp", ".\\dat\\WeightSaveMeta.meta");
 
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.WriteLine("📶 Synced with server 📶");
