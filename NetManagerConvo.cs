@@ -131,6 +131,14 @@ public class NetManagerConvo
 					File.Delete(".\\dat\\WeightSaveMeta.meta");
 				File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 			}
+			if (File.Exists(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat"))
+			{
+				File.Move(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+			}
+			if (File.Exists(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta"))
+			{
+				File.Move(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+			}
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
 			Console.ResetColor();
@@ -290,6 +298,14 @@ public class NetManagerConvo
 						if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
 							File.Delete(".\\dat\\WeightSaveMeta.meta");
 						File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+					}
+					if (File.Exists(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat"))
+					{
+						File.Move(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+					}
+					if (File.Exists(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta"))
+					{
+						File.Move(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 					}
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
