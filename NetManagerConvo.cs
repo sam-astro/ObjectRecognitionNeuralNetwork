@@ -520,10 +520,10 @@ public class NetManagerConvo
 	{
 		Console.ForegroundColor = ConsoleColor.Magenta;
 
-		File.Move(".\\dat\\WeightSave.dat", ".\\dat\\" + fitness + "_WeightSave.dat");
-		Console.WriteLine("* Moved \".\\dat\\WeightSave.dat\" to \".\\dat\\" + fitness + "_WeightSave.dat\"");
-		File.Move(".\\dat\\WeightSaveMeta.meta", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
-		Console.WriteLine("* Moved \".\\dat\\WeightSaveMeta.meta\" to \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
+		File.Copy(".\\dat\\WeightSave.dat", ".\\dat\\" + fitness + "_WeightSave.dat");
+		Console.WriteLine("* Copied \".\\dat\\WeightSave.dat\" to \".\\dat\\" + fitness + "_WeightSave.dat\"");
+		File.Copy(".\\dat\\WeightSaveMeta.meta", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
+		Console.WriteLine("* Copied \".\\dat\\WeightSaveMeta.meta\" to \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
 		// Upload weight save
 		Console.WriteLine("* Uploading \".\\dat\\" + fitness + "_WeightSave.dat\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
@@ -541,10 +541,10 @@ public class NetManagerConvo
 		string sTwo = System.Text.Encoding.UTF8.GetString(resultTwo, 0, resultTwo.Length);
 		Console.WriteLine("* Uploaded \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
-		File.Move(".\\dat\\" + fitness + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
-		Console.WriteLine("* Moved \".\\dat\\" + fitness + "_WeightSave.dat\" to \".\\dat\\WeightSave.dat\"");
-		File.Move(".\\dat\\" + fitness + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
-		Console.WriteLine("* Moved \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to \".\\dat\\WeightSaveMeta.meta\"");
+		File.Delete(".\\dat\\" + fitness + "_WeightSave.dat");
+		Console.WriteLine("* Deleted Copy at \".\\dat\\" + fitness + "_WeightSave.dat\"");
+		File.Delete(".\\dat\\" + fitness + "_WeightSaveMeta.meta");
+		Console.WriteLine("* Deleted Copy at \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
 		Console.ForegroundColor = ConsoleColor.Green;
 		Console.WriteLine("* Synced with server");
