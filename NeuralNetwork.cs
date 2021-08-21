@@ -263,27 +263,22 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                     //mutate weight value 
                     float randomNumber = new Random().Next(0, 100);
 
-                    if (randomNumber <= 4f)
-                    { //if 2
-                      //pick random weight between -1 and 1
-                        weight = new Random().Next(0, 100) / 100.0f;
-                    }
-                    else if (randomNumber <= 6f)
+                    if (randomNumber <= 2f)
                     { //if 3
-                      //randomly increase by 0% to 100%
-                        float factor = new Random().Next(0, 100) / 100.0f + 1f;
-                        weight *= factor;
+                      //randomly increase by 0% to 1%
+                        float factor = new Random().Next(0, 100) / 10000.0f;
+                        weight += factor;
+                    }
+                    else if (randomNumber <= 4f)
+                    { //if 4
+                      //randomly decrease by 0% to 1%
+                        float factor = new Random().Next(-100, 100) / 10000.0f;
+                        weight -= factor;
                     }
                     else if (randomNumber <= 8f)
-                    { //if 4
-                      //randomly decrease by 0% to 100%
-                        float factor = new Random().Next(-100, 100) / 100.0f;
-                        weight *= factor;
-                    }
-                    else if (randomNumber <= 75f)
                     { //if 5
                       //randomly increase or decrease weight by tiny amount
-                        float factor = new Random().Next(-1000, 1000) / 100.0f / 1000;
+                        float factor = new Random().Next(-1000, 1000) / 100.0f / 100000;
                         weight += factor;
                     }
                     //else

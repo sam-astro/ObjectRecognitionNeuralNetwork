@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class Prompt
 {
@@ -43,6 +45,7 @@ public class Prompt
 			}
 		}
 		Bitmap edgeDetected = EdgeDetection(resized);
+
 		for (int x = 0; x < resized.Width; x++)
 		{
 			for (int y = 0; y < resized.Height; y++)

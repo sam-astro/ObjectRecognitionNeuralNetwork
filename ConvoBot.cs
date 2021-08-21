@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class ConvoBot
 {
@@ -24,16 +26,27 @@ public class ConvoBot
 			prompt = promptObject.GetPrompt(l);
 
 			float[] inputs = new float[4096];
-			for (int x = 0; x < prompt.Length; x++)
+
+			Parallel.For(0, prompt.Length, x =>
 			{
-				for (int y = 0; y < prompt[x].Length; y++)
+				Parallel.For(0, prompt[x].Length, y =>
 				{
 					if (y == 0)
 						inputs[x] = prompt[x][y];
 					else
 						inputs[(64 * (y - 1)) + x] = prompt[x][y];
-				}
-			}
+				});
+			});
+			//for (int x = 0; x < prompt.Length; x++)
+			//{
+			//	for (int y = 0; y < prompt[x].Length; y++)
+			//	{
+			//		if (y == 0)
+			//			inputs[x] = prompt[x][y];
+			//		else
+			//			inputs[(64 * (y - 1)) + x] = prompt[x][y];
+			//	}
+			//}
 			float[] outputs = net.FeedForward(inputs);
 			answer = Math.Abs(outputs[0]) * 4;
 			//for (int i = 0; i < 10; i++)
