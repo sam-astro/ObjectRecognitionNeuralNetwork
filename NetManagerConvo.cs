@@ -186,26 +186,26 @@ public class NetManagerConvo
 				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize);
 				Console.Write("  |  ");
 				Console.ForegroundColor = ConsoleColor.Green;
-				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
+				Console.Write("Best Fitness: " + (highestFitness / 100) + "%");
 				if ((lowestFitness / 100) < lastWorst)
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
+					Console.Write("Worst Fitness: " + (lowestFitness / 100) + "%\n");
 					Console.ResetColor();
 				}
 				else if ((lowestFitness / 100) > lastWorst)
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Green;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
+					Console.Write("Worst Fitness: " + (lowestFitness / 100) + "%\n");
 					Console.ResetColor();
 				}
 				else
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.DarkGray;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
+					Console.Write("Worst Fitness: " + (lowestFitness / 100) + "%\n");
 					Console.ResetColor();
 				}
 
@@ -253,26 +253,26 @@ public class NetManagerConvo
 				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize);
 				Console.Write("  |  ");
 				Console.ForegroundColor = ConsoleColor.DarkGray;
-				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
+				Console.Write("Best Fitness: " + (highestFitness / 100) + "%");
 				if ((lowestFitness / 100) < lastWorst)
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
+					Console.Write("Worst Fitness: " + (lowestFitness / 100) + "%\n");
 					Console.ResetColor();
 				}
 				else if ((lowestFitness / 100) > lastWorst)
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Green;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
+					Console.Write("Worst Fitness: " + (lowestFitness / 100) + "%\n");
 					Console.ResetColor();
 				}
 				else
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.DarkGray;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
+					Console.Write("Worst Fitness: " + (lowestFitness / 100) + "%\n");
 					Console.ResetColor();
 				}
 			}
@@ -377,11 +377,12 @@ public class NetManagerConvo
 		//	nets[populationSize - 1] = new NeuralNetwork(nets[populationSize - 1]); //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy lol
 		//	nets[populationSize - 2] = new NeuralNetwork(nets[populationSize - 2]); //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy lol
 		//}
-
+		Console.ForegroundColor = ConsoleColor.Blue;
 		if ((highestFitness / 100) > lastBest)
 		{
 			Parallel.For(0, (populationSize - 2) / 2, i =>
 			{
+				Console.WriteLine("* Processing net " + i);
 				nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
 				nets[i].Mutate();
 
@@ -396,6 +397,7 @@ public class NetManagerConvo
 		{
 			Parallel.For(0, (populationSize - 2) / 2, i =>
 			{
+				Console.WriteLine("* Processing net " + i);
 				nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
 
 				nets[i].RandomizeWeights();
@@ -408,7 +410,7 @@ public class NetManagerConvo
 				nets[populationSize - 2] = new NeuralNetwork(nets[populationSize - 2]); //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy lol
 			});
 		}
-
+		Console.ResetColor();
 
 		for (int i = 0; i < populationSize; i++)
 		{
@@ -437,7 +439,7 @@ public class NetManagerConvo
 		Parallel.For(0, populationSize, i =>
 		{
 			NeuralNetwork net = new NeuralNetwork(layers, collectedWeights);
-			Console.WriteLine("* Creating net:: " + i + " of " + populationSize);
+			Console.WriteLine("* Creating net: " + i + " of " + populationSize);
 			net.Mutate();
 			if (persistenceNetwork != null)
 				net.weights = persistenceNetwork.weights;
@@ -488,7 +490,7 @@ public class NetManagerConvo
 		//					continue;
 		//				if (line.Split("=")[2] != k.ToString())
 		//					continue;
-		//				Console.WriteLine("Reading:: " + line);
+		//				Console.WriteLine("Reading: " + line);
 		//				persistenceNetwork.weights[i][j][k] = float.Parse(line.Split("=")[3]);
 		//			}
 
