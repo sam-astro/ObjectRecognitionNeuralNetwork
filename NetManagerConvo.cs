@@ -98,6 +98,27 @@ public class NetManagerConvo
 			}
 		}
 
+		if (File.Exists(".\\dat\\temp_WeightSave.dat"))
+		{
+			if (File.Exists(".\\dat\\WeightSave.dat"))
+				File.Delete(".\\dat\\WeightSave.dat");
+			File.Move(".\\dat\\temp_WeightSave.dat", ".\\dat\\WeightSave.dat");
+		}
+		if (File.Exists(".\\dat\\temp_WeightSaveMeta.meta"))
+		{
+			if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
+				File.Delete(".\\dat\\WeightSaveMeta.meta");
+			File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+		}
+		if (File.Exists(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat"))
+		{
+			File.Move(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
+		}
+		if (File.Exists(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta"))
+		{
+			File.Move(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
+		}
+
 		StreamReader sr = File.OpenText(".\\dat\\WeightSaveMeta.meta");
 		string firstLine = sr.ReadLine().Trim();
 		string currentGen = firstLine.Split("#")[0];
