@@ -183,7 +183,7 @@ public class NetManagerConvo
 
 				persistence.Close();
 
-				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize + "═╝");
+				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize);
 				Console.Write("  |  ");
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
@@ -191,21 +191,21 @@ public class NetManagerConvo
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
 					Console.ResetColor();
 				}
 				else if ((lowestFitness / 100) > lastWorst)
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Green;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
 					Console.ResetColor();
 				}
 				else
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.DarkGray;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
 					Console.ResetColor();
 				}
 
@@ -250,7 +250,7 @@ public class NetManagerConvo
 			}
 			else
 			{
-				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize + "═╝");
+				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize);
 				Console.Write("  |  ");
 				Console.ForegroundColor = ConsoleColor.DarkGray;
 				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
@@ -258,21 +258,21 @@ public class NetManagerConvo
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
 					Console.ResetColor();
 				}
 				else if ((lowestFitness / 100) > lastWorst)
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.Green;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
 					Console.ResetColor();
 				}
 				else
 				{
 					Console.Write("  |  ");
 					Console.ForegroundColor = ConsoleColor.DarkGray;
-					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "% ═╝\n");
 					Console.ResetColor();
 				}
 			}
