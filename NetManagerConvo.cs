@@ -108,10 +108,10 @@ public class NetManagerConvo
 		try
 		{
 			Console.ForegroundColor = ConsoleColor.Cyan;
-			Console.WriteLine("Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+			Console.WriteLine("* Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 			System.Net.WebClient Client = new System.Net.WebClient();
 			string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
-			Console.WriteLine("Got highest fitness, it is: " + s);
+			Console.WriteLine("* Got highest fitness, it is: " + s);
 			Console.ResetColor();
 			if (s != null)
 			{
@@ -136,7 +136,7 @@ public class NetManagerConvo
 				File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 			}
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
+			Console.WriteLine("* ? Could not sync with server. Please try again later. ?");
 			Console.ResetColor();
 			//throw;
 		}
@@ -172,15 +172,7 @@ public class NetManagerConvo
 			highestFitness = nets[nets.Count-1].fitness;
 			lowestFitness = nets[0].fitness;
 
-			Console.Write("Generation: " + generationNumber + "  |  Population: " + populationSize);
-			if ((highestFitness / 100) < lastBest)
-			{
-				Console.Write("  |  ");
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
-				Console.ResetColor();
-			}
-			else if ((highestFitness / 100) > lastBest || (queuedForUpload == true && generationNumber % 2 == 0))
+			if ((highestFitness / 100) > lastBest || (queuedForUpload == true && generationNumber % 2 == 0))
 			{
 				StreamWriter persistence = new StreamWriter(".\\dat\\WeightSaveMeta.meta");
 				persistence.WriteLine((generationNumber).ToString() + "#" + (highestFitness / 100).ToString());
@@ -191,20 +183,42 @@ public class NetManagerConvo
 
 				persistence.Close();
 
+				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize + "═╝");
 				Console.Write("  |  ");
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
+				if ((lowestFitness / 100) < lastWorst)
+				{
+					Console.Write("  |  ");
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.ResetColor();
+				}
+				else if ((lowestFitness / 100) > lastWorst)
+				{
+					Console.Write("  |  ");
+					Console.ForegroundColor = ConsoleColor.Green;
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.ResetColor();
+				}
+				else
+				{
+					Console.Write("  |  ");
+					Console.ForegroundColor = ConsoleColor.DarkGray;
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.ResetColor();
+				}
 
-				Console.WriteLine("Saving...");
+				Console.WriteLine("* Saving...");
 				Console.ResetColor();
 
 				try
 				{
 					Console.ForegroundColor = ConsoleColor.Cyan;
-					Console.WriteLine("Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+					Console.WriteLine("* Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 					System.Net.WebClient Client = new System.Net.WebClient();
 					string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
-					Console.WriteLine("Got highest fitness, it is: " + s);
+					Console.WriteLine("* Got highest fitness, it is: " + s);
 					Console.ResetColor();
 					if (s != null)
 					{
@@ -229,39 +243,38 @@ public class NetManagerConvo
 						File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 					}
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
+					Console.WriteLine("* ? Could not sync with server. Please try again later. ?");
 					Console.ResetColor();
 					//throw;
 				}
 			}
 			else
 			{
+				Console.Write("╚═ Generation: " + generationNumber + "  |  Population: " + populationSize + "═╝");
 				Console.Write("  |  ");
 				Console.ForegroundColor = ConsoleColor.DarkGray;
 				Console.Write("Best Fitness:: " + (highestFitness / 100) + "%");
-				Console.ResetColor();
-			}
-
-			if ((lowestFitness / 100) < lastWorst)
-			{
-				Console.Write("  |  ");
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
-				Console.ResetColor();
-			}
-			else if ((lowestFitness / 100) > lastWorst)
-			{
-				Console.Write("  |  ");
-				Console.ForegroundColor = ConsoleColor.Green;
-				Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
-				Console.ResetColor();
-			}
-			else
-			{
-				Console.Write("  |  ");
-				Console.ForegroundColor = ConsoleColor.DarkGray;
-				Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
-				Console.ResetColor();
+				if ((lowestFitness / 100) < lastWorst)
+				{
+					Console.Write("  |  ");
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.ResetColor();
+				}
+				else if ((lowestFitness / 100) > lastWorst)
+				{
+					Console.Write("  |  ");
+					Console.ForegroundColor = ConsoleColor.Green;
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.ResetColor();
+				}
+				else
+				{
+					Console.Write("  |  ");
+					Console.ForegroundColor = ConsoleColor.DarkGray;
+					Console.Write("Worst Fitness:: " + (lowestFitness / 100) + "%\n");
+					Console.ResetColor();
+				}
 			}
 
 			Finalizer();
@@ -287,10 +300,10 @@ public class NetManagerConvo
 				try
 				{
 					Console.ForegroundColor = ConsoleColor.Cyan;
-					Console.WriteLine("Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
+					Console.WriteLine("* Getting highest fitness from  http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 					System.Net.WebClient Client = new System.Net.WebClient();
 					string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
-					Console.WriteLine("Got highest fitness, it is: " + s);
+					Console.WriteLine("* Got highest fitness, it is: " + s);
 					Console.ResetColor();
 					if (s != null)
 					{
@@ -323,7 +336,7 @@ public class NetManagerConvo
 						File.Move(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 					}
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
+					Console.WriteLine("* ? Could not sync with server. Please try again later. ?");
 					Console.ResetColor();
 				}
 			}
@@ -424,7 +437,7 @@ public class NetManagerConvo
 		Parallel.For(0, populationSize, i =>
 		{
 			NeuralNetwork net = new NeuralNetwork(layers, collectedWeights);
-			Console.WriteLine("Creating net:: " + i + " of " + populationSize);
+			Console.WriteLine("* Creating net:: " + i + " of " + populationSize);
 			net.Mutate();
 			if (persistenceNetwork != null)
 				net.weights = persistenceNetwork.weights;
@@ -450,11 +463,11 @@ public class NetManagerConvo
 
 		// New System
 		Console.ForegroundColor = ConsoleColor.Blue;
-		Console.WriteLine("Loading...");
+		Console.WriteLine("* Loading...");
 		BinaryFormatter bf = new BinaryFormatter();
 		using (FileStream fs = new FileStream(".\\dat\\WeightSave.dat", FileMode.Open))
 			persistenceNetwork.weights = (float[][][])bf.Deserialize(fs);
-		Console.WriteLine("Finished Loading.");
+		Console.WriteLine("* Finished Loading.");
 		Console.ResetColor();
 
 		// Old System
@@ -493,33 +506,33 @@ public class NetManagerConvo
 		Console.ForegroundColor = ConsoleColor.Magenta;
 
 		File.Move(".\\dat\\WeightSave.dat", ".\\dat\\" + fitness + "_WeightSave.dat");
-		Console.WriteLine("Moved \".\\dat\\WeightSave.dat\" to \".\\dat\\" + fitness + "_WeightSave.dat\"");
+		Console.WriteLine("* Moved \".\\dat\\WeightSave.dat\" to \".\\dat\\" + fitness + "_WeightSave.dat\"");
 		File.Move(".\\dat\\WeightSaveMeta.meta", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
-		Console.WriteLine("Moved \".\\dat\\WeightSaveMeta.meta\" to \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
+		Console.WriteLine("* Moved \".\\dat\\WeightSaveMeta.meta\" to \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
 		// Upload weight save
-		Console.WriteLine("Uploading \".\\dat\\" + fitness + "_WeightSave.dat\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
+		Console.WriteLine("* Uploading \".\\dat\\" + fitness + "_WeightSave.dat\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
 		System.Net.WebClient Client = new System.Net.WebClient();
 		Client.Headers.Add("enctype", "multipart/form-data");
 		byte[] result = Client.UploadFile("http://achillium.us.to/objectrecognitionneuralnetdata/uploadweights.php", "POST", ".\\dat\\" + fitness + "_WeightSave.dat");
 		string s = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
-		Console.WriteLine("Uploaded \".\\dat\\" + fitness + "_WeightSave.dat\"");
+		Console.WriteLine("* Uploaded \".\\dat\\" + fitness + "_WeightSave.dat\"");
 
 		// Upload weight save meta
-		Console.WriteLine("Uploading \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
+		Console.WriteLine("* Uploading \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to http://achillium.us.to/objectrecognitionneuralnetdata/");
 		System.Net.WebClient ClientTwo = new System.Net.WebClient();
 		ClientTwo.Headers.Add("enctype", "multipart/form-data");
 		byte[] resultTwo = ClientTwo.UploadFile("http://achillium.us.to/objectrecognitionneuralnetdata/uploadweights.php", "POST", ".\\dat\\" + fitness + "_WeightSaveMeta.meta");
 		string sTwo = System.Text.Encoding.UTF8.GetString(resultTwo, 0, resultTwo.Length);
-		Console.WriteLine("Uploaded \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
+		Console.WriteLine("* Uploaded \".\\dat\\" + fitness + "_WeightSaveMeta.meta\"");
 
 		File.Move(".\\dat\\" + fitness + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
-		Console.WriteLine("Moved \".\\dat\\" + fitness + "_WeightSave.dat\" to \".\\dat\\WeightSave.dat\"");
+		Console.WriteLine("* Moved \".\\dat\\" + fitness + "_WeightSave.dat\" to \".\\dat\\WeightSave.dat\"");
 		File.Move(".\\dat\\" + fitness + "_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
-		Console.WriteLine("Moved \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to \".\\dat\\WeightSaveMeta.meta\"");
+		Console.WriteLine("* Moved \".\\dat\\" + fitness + "_WeightSaveMeta.meta\" to \".\\dat\\WeightSaveMeta.meta\"");
 
 		Console.ForegroundColor = ConsoleColor.Green;
-		Console.WriteLine("📶 Synced with server 📶");
+		Console.WriteLine("* Synced with server");
 		Console.ResetColor();
 	}
 
@@ -529,12 +542,12 @@ public class NetManagerConvo
 
 		System.Net.WebClient Client = new System.Net.WebClient();
 
-		Console.WriteLine("Downloading \"" + s + "_WeightSave.dat\" from http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat");
+		Console.WriteLine("* Downloading \"" + s + "_WeightSave.dat\" from http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat");
 		Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSave.dat"), @".\dat\temp_WeightSave.dat");
-		Console.WriteLine("Downloaded \"" + s + "_WeightSave.dat\"");
-		Console.WriteLine("Downloading \"" + s + "_WeightSaveMeta.meta\" from http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta");
+		Console.WriteLine("* Downloaded \"" + s + "_WeightSave.dat\"");
+		Console.WriteLine("* Downloading \"" + s + "_WeightSaveMeta.meta\" from http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta");
 		Client.DownloadFile(new Uri("http://achillium.us.to/objectrecognitionneuralnetdata/" + s + "_WeightSaveMeta.meta"), @".\dat\temp_WeightSaveMeta.meta");
-		Console.WriteLine("Downloaded \"" + s + "_WeightSaveMeta.meta\"");
+		Console.WriteLine("* Downloaded \"" + s + "_WeightSaveMeta.meta\"");
 
 		if (File.Exists(".\\dat\\temp_WeightSave.dat"))
 		{
@@ -549,8 +562,17 @@ public class NetManagerConvo
 			File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 		}
 
+		StreamReader sr = File.OpenText(".\\dat\\WeightSaveMeta.meta");
+		string firstLine = sr.ReadLine().Trim();
+		string currentGen = firstLine.Split("#")[0];
+		int generationNumber = int.Parse(currentGen) + 1;
+		sr.Close();
+		StreamWriter persistence = new StreamWriter(".\\dat\\WeightSaveMeta.meta");
+		persistence.WriteLine((generationNumber).ToString() + "#" + s);
+		persistence.Close();
+
 		Console.ForegroundColor = ConsoleColor.Green;
-		Console.WriteLine("📶 Synced with server 📶");
+		Console.WriteLine("* Synced with server");
 		Console.ResetColor();
 	}
 }
