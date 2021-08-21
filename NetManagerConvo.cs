@@ -378,9 +378,9 @@ public class NetManagerConvo
 		//	nets[populationSize - 2] = new NeuralNetwork(nets[populationSize - 2]); //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy lol
 		//}
 		Console.ForegroundColor = ConsoleColor.Blue;
+		Console.WriteLine("* Copying weights and mutating networks...");
 		Parallel.For(0, (populationSize - 2) / 2, i =>
 		{
-			Console.WriteLine("* Restarting net " + i + " of " + (populationSize - 2) / 2);
 			nets[i] = new NeuralNetwork(nets[i]);     //Copies weight values from top half networks to worst half
 			nets[i].Mutate();
 
@@ -390,6 +390,7 @@ public class NetManagerConvo
 			nets[populationSize - 1] = new NeuralNetwork(nets[populationSize - 1]); //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy lol
 			nets[populationSize - 2] = new NeuralNetwork(nets[populationSize - 2]); //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy lol
 		});
+		Console.WriteLine("* Done.");
 		//if ((highestFitness / 100) > lastBest)
 		//{
 		//	Parallel.For(0, (populationSize - 2) / 2, i =>
