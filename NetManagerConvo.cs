@@ -111,10 +111,10 @@ public class NetManagerConvo
 			string s = Client.DownloadString("http://achillium.us.to/objectrecognitionneuralnetdata/bestuploadedfitness.php");
 			if (s != null)
 			{
-				if (float.Parse(s) > highestFitness / 100)
+				if (float.Parse(s) > bestLocalFitness)
 					Download(s);
-				else if (float.Parse(s) < highestFitness / 100)
-					Upload(highestFitness / 100);
+				else if (float.Parse(s) < bestLocalFitness)
+					Upload(bestLocalFitness);
 			}
 		}
 		catch (Exception)
@@ -130,14 +130,6 @@ public class NetManagerConvo
 				if (File.Exists(".\\dat\\WeightSaveMeta.meta"))
 					File.Delete(".\\dat\\WeightSaveMeta.meta");
 				File.Move(".\\dat\\temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
-			}
-			if (File.Exists(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat"))
-			{
-				File.Move(".\\dat\\" + highestFitness / 100 + "_WeightSave.dat", ".\\dat\\WeightSave.dat");
-			}
-			if (File.Exists(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta"))
-			{
-				File.Move(".\\dat\\" + highestFitness / 100 + "temp_WeightSaveMeta.meta", ".\\dat\\WeightSaveMeta.meta");
 			}
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("📶 Could not sync with server. Please try again later. 📶");
