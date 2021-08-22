@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Neural Network C# (Unsupervised)
@@ -252,11 +253,11 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     /// </summary>
     public void Mutate()
     {
-        for (int i = 0; i < weights.Length; i++)
+        Parallel.For(0, weights.Length, i =>
         {
-            for (int j = 0; j < weights[i].Length; j++)
+            Parallel.For(0, weights[i].Length, j =>
             {
-                for (int k = 0; k < weights[i][j].Length; k++)
+                Parallel.For(0, weights[i][j].Length, k =>
                 {
                     float weight = weights[i][j][k];
 
@@ -288,9 +289,48 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                     //}
 
                     weights[i][j][k] = weight;
-                }
-            }
-        }
+                });
+            });
+        });
+        //for (int i = 0; i < weights.Length; i++)
+        //{
+        //    for (int j = 0; j < weights[i].Length; j++)
+        //    {
+        //        for (int k = 0; k < weights[i][j].Length; k++)
+        //        {
+        //            float weight = weights[i][j][k];
+
+        //            //mutate weight value 
+        //            float randomNumber = new Random().Next(0, 100);
+
+        //            if (randomNumber <= 2f)
+        //            { //if 3
+        //              //randomly increase by 0% to 1%
+        //                float factor = new Random().Next(0, 100) / 10000.0f;
+        //                weight += factor;
+        //            }
+        //            else if (randomNumber <= 4f)
+        //            { //if 4
+        //              //randomly decrease by 0% to 1%
+        //                float factor = new Random().Next(-100, 100) / 10000.0f;
+        //                weight -= factor;
+        //            }
+        //            else if (randomNumber <= 8f)
+        //            { //if 5
+        //              //randomly increase or decrease weight by tiny amount
+        //                float factor = new Random().Next(-1000, 1000) / 100.0f / 100000;
+        //                weight += factor;
+        //            }
+        //            //else
+        //            //{
+        //            //    //pick random weight between -1 and 1
+        //            //    weight = new Random().Next(-100, 100) / 100.0f;
+        //            //}
+
+        //            weights[i][j][k] = weight;
+        //        }
+        //    }
+        //}
     }
 
     public void AddFitness(float fit)

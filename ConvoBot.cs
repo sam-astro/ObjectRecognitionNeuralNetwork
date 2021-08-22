@@ -106,6 +106,7 @@ public class ConvoBot
 		//net.AddFitness(((float)amountCorrect) * 100);
 		//if (amountCorrect > promptObject.AmountOfPrompts() - 25)
 		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct.");
+		promptObject = null;
 		failed = true;
 	}
 
