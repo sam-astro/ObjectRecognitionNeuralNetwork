@@ -14,6 +14,7 @@ public class ConvoBot
 	byte[][] prompt;
 	float answer;
 	int amountCorrect = 0;
+	float confidence = 0;
 
 	public void StartNetwork()
 	{
@@ -60,12 +61,14 @@ public class ConvoBot
 				amountCorrect++;
 				//net.AddFitness(Math.Clamp(answer, 0, 1000) * 100);
 				net.AddFitness(((float)100 / (float)promptObject.AmountOfPrompts()) * (float)100);
+				confidence += answer;
 			}
 			else if (answer < 0.5f && answer > 0f && promptObject.PromptType() == "NON-HUMAN")
 			{
 				amountCorrect++;
 				//net.AddFitness(Math.Abs(Math.Clamp(1 - answer, -1000, 1)) * 100);
 				net.AddFitness(((float)100 / (float)promptObject.AmountOfPrompts()) * (float)100);
+				confidence += (1 - answer);
 			}
 			//if (guessScore > 95)
 			//{
@@ -105,7 +108,8 @@ public class ConvoBot
 		//net.SetFitness(((float)amountCorrect / (float)promptObject.amountOfPrompts) * 100);
 		//net.AddFitness(((float)amountCorrect) * 100);
 		//if (amountCorrect > promptObject.AmountOfPrompts() - 25)
-		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct.");
+		net.AddFitness(confidence/10);
+		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct, " + Math.Round(confidence*10)/10 + "% confidence.");
 		promptObject = null;
 		failed = true;
 	}
