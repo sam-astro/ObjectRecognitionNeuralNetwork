@@ -222,10 +222,10 @@ public class NetManagerConvo
 					Console.ResetColor();
 					if (s != null)
 					{
-						if (float.Parse(s) > bestLocalFitness)
+						if (float.Parse(s) > (highestFitness / 100))
 							Download(s);
-						else if (float.Parse(s) < bestLocalFitness)
-							Upload(bestLocalFitness);
+						else if (float.Parse(s) < (highestFitness / 100))
+							Upload((highestFitness / 100));
 					}
 				}
 				catch (Exception)
