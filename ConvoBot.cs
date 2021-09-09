@@ -18,8 +18,14 @@ public class ConvoBot
 
 	public void StartNetwork()
 	{
-		Prompt promptObject = new Prompt();
 		failed = false;
+		prompt = null;
+		answer = 0;
+		amountCorrect = 0;
+		confidence = 0;
+		net.SetFitness(0);
+
+		Prompt promptObject = new Prompt();
 		for (int l = 0; l < promptObject.AmountOfPrompts(); l++)
 		{
 			answer = 0;
@@ -108,8 +114,8 @@ public class ConvoBot
 		//net.SetFitness(((float)amountCorrect / (float)promptObject.amountOfPrompts) * 100);
 		//net.AddFitness(((float)amountCorrect) * 100);
 		//if (amountCorrect > promptObject.AmountOfPrompts() - 25)
-		net.AddFitness(confidence/10);
-		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct, " + Math.Round(confidence*10)/10 + "% confidence.");
+		net.AddFitness(confidence / 10);
+		Console.WriteLine("Got " + amountCorrect + " of " + promptObject.AmountOfPrompts() + " correct, " + Math.Round(confidence * 10) / 10 + "% confidence.");
 		promptObject = null;
 		failed = true;
 	}

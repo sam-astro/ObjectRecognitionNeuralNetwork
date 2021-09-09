@@ -27,38 +27,52 @@ public class Prompt
 	public byte[][] GetPrompt(int l)
 	{
 		string[] TrainingFiles = Directory.GetFiles(".\\humansdataset\\");
-		
+		List<string> ProcessedFiles = new List<string>(0);
+        foreach (var file in TrainingFiles)
+        {
+			string fileName = file;
+            if (!file.Contains("processed") && !File.Exists("." + file.Split(".")[1] + ".processed." + file.Split(".")[2]))
+			{
+				Bitmap original = (Bitmap)Image.FromFile(file);
+
+				for (int x = 0; x < original.Width; x++)
+				{
+					for (int y = 0; y < original.Height; y++)
+					{
+						Color pixelColor = original.GetPixel(x, y);
+						int avgBrightness = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+						original.SetPixel(x, y, Color.FromArgb(avgBrightness, avgBrightness, avgBrightness));
+					}
+				}
+				Bitmap processImg = new Bitmap(original, new Size(64, 64));
+
+				Bitmap edgeDetected = EdgeDetection(processImg);
+
+				processImg.Save("." + file.Split(".")[1] + ".processed." + file.Split(".")[2]);
+			}
+			else if(File.Exists("." + file.Split(".")[1] + ".processed." + file.Split(".")[2]))
+				fileName = "." + file.Split(".")[1] + ".processed." + file.Split(".")[2];
+			ProcessedFiles.Add(fileName);
+		}
+
+		Bitmap finalImage = (Bitmap)Image.FromFile(ProcessedFiles[l]);
+
 		for (int i = 0; i < pixels.Length; ++i)
 			pixels[i] = new byte[64];
 
-		Bitmap original = (Bitmap)Image.FromFile(TrainingFiles[l]);
-		Bitmap resized = new Bitmap(original, new Size(64, 64));
-
-		for (int x = 0; x < resized.Width; x++)
+		for (int x = 0; x < finalImage.Width; x++)
 		{
-			for (int y = 0; y < resized.Height; y++)
+			for (int y = 0; y < finalImage.Height; y++)
 			{
-				Color pixelColor = resized.GetPixel(x, y);
-				int avgBrightness = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-				resized.SetPixel(x, y, Color.FromArgb(avgBrightness, avgBrightness, avgBrightness));
-				//pixels[y][x] = (byte)avgBrightness;
-			}
-		}
-		Bitmap edgeDetected = EdgeDetection(resized);
-
-		for (int x = 0; x < resized.Width; x++)
-		{
-			for (int y = 0; y < resized.Height; y++)
-			{
-				pixels[y][x] = (byte)edgeDetected.GetPixel(x, y).R;
+				pixels[y][x] = (byte)finalImage.GetPixel(x, y).R;
 			}
 		}
 
 		prompt = pixels;
-		if (TrainingFiles[l].Split("humansdataset")[1].Contains("human") == true)
+		if (ProcessedFiles[l].Split("humansdataset")[1].Contains("human") == true)
 		{
 			correctAnswer = 1;
-			//Console.WriteLine(TrainingFiles[l]);
+			//Console.WriteLine(ProcessedFiles[l]);
 		}
 		else
 		{
@@ -78,7 +92,7 @@ public class Prompt
 		{
 			for (var j = 0; j < inputImg.Width; j++)
 			{
-				if (i == inputImg.Height - 1 || j == inputImg.Width - 1)
+				if (i >= inputImg.Height - 1 || j >= inputImg.Width - 1)
 					newIntensity = 0;
 				else
 				{
@@ -120,7 +134,7 @@ public class Prompt
 	public int AmountOfPrompts()
 	{
 		amountOfPrompts = Directory.GetFiles(".\\humansdataset\\").Length;
-		return amountOfPrompts;
+		return amountOfPrompts/2;
 	}
 
 	public float CheckCorrectness(float guess)

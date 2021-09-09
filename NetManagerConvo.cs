@@ -169,14 +169,14 @@ public class NetManagerConvo
 
 			nets.Sort();
 
-			highestFitness = nets[nets.Count-1].fitness;
+			highestFitness = nets[nets.Count - 1].fitness;
 			lowestFitness = nets[0].fitness;
 
 			if ((highestFitness / 100) > lastBest || (queuedForUpload == true && generationNumber % 2 == 0))
 			{
 				StreamWriter persistence = new StreamWriter(".\\dat\\WeightSaveMeta.meta");
 				persistence.WriteLine((generationNumber).ToString() + "#" + (highestFitness / 100).ToString());
-				
+
 				BinaryFormatter bf = new BinaryFormatter();
 				using (FileStream fs = new FileStream(".\\dat\\WeightSave.dat", FileMode.Create))
 					bf.Serialize(fs, nets[nets.Count - 1].weights);
@@ -310,7 +310,7 @@ public class NetManagerConvo
 						if (float.Parse(s) > highestFitness / 100)
 							Download(s);
 						else if (float.Parse(s) < highestFitness / 100)
-							Upload(highestFitness/100);
+							Upload(highestFitness / 100);
 					}
 				}
 				catch (Exception)
@@ -351,20 +351,23 @@ public class NetManagerConvo
 
 	private void CreateEntityBodies()
 	{
-		if(entityList != null)
-			for (int i = 0; i < entityList.Count; i++)
-			{
-				entityList[i] = null;
-			}
-
-		entityList = new List<ConvoBot>();
-
-		for (int i = 0; i < populationSize; i++)
+		if (entityList == null)
 		{
-			ConvoBot convoBot = new ConvoBot();
-			convoBot.Init(nets[i]);
-			entityList.Add(convoBot);
+			entityList = new List<ConvoBot>();
+
+			for (int i = 0; i < populationSize; i++)
+			{
+				ConvoBot convoBot = new ConvoBot();
+				convoBot.Init(nets[i]);
+				entityList.Add(convoBot);
+			}
 		}
+		else
+			for (int i = 0; i < populationSize; i++)
+			{
+				//ConvoBot convoBot = new ConvoBot();
+				entityList[i].Init(nets[i]);
+			}
 	}
 
 	void Finalizer()

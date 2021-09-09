@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "FgPHXPyRiVsgl66rpeAY4+WAmLv9rmbWsjPWJv3ZWRB72Ipw4zE9vLchGnhRAGHE5NVhQZhQ+CSg6ATx23J/Kg==",
+  "dgSpecHash": "oqGkUsexKWjDM4WX7t9Iiq4r/1nDaFa8WULKVpWaga6vgttNX1Av+QwplnoORPiIGSS5zOoCETT4S+LDfd8aBw==",
   "success": true,
   "projectFilePath": "D:\\Code\\ObjectRecognitionNeuralNetwork\\NeuralNetConsoleCS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\samda\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
-    "C:\\Users\\samda\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-    "C:\\Users\\samda\\.nuget\\packages\\system.drawing.common\\5.0.2\\system.drawing.common.5.0.2.nupkg.sha512"
+    "C:\\Users\\Sam\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Sam\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Sam\\.nuget\\packages\\system.drawing.common\\5.0.2\\system.drawing.common.5.0.2.nupkg.sha512",
+    "C:\\Users\\Sam\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.17\\microsoft.netcore.app.host.win-x64.3.1.17.nupkg.sha512"
   ],
   "logs": []
 }
