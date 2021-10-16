@@ -23,7 +23,7 @@ public class Prompt
 	}
 
 
-	public static byte[][] pixels = new byte[64][];
+	public static byte[][] pixels = new byte[32][];
 	public byte[][] GetPrompt(int l)
 	{
 		string[] TrainingFiles = Directory.GetFiles(".\\humansdataset\\");
@@ -31,7 +31,7 @@ public class Prompt
         foreach (var file in TrainingFiles)
         {
 			string fileName = file;
-            if (!file.Contains("processed") && !File.Exists("." + file.Split(".")[1] + ".processed." + file.Split(".")[2]))
+            if (!file.Contains("processed") && !File.Exists("." + file.Split(".")[1] + ".processed.bmp"))
 			{
 				Bitmap original = (Bitmap)Image.FromFile(file);
 
@@ -44,21 +44,21 @@ public class Prompt
 						original.SetPixel(x, y, Color.FromArgb(avgBrightness, avgBrightness, avgBrightness));
 					}
 				}
-				Bitmap processImg = new Bitmap(original, new Size(64, 64));
+				Bitmap processImg = new Bitmap(original, new Size(32, 32));
 
 				Bitmap edgeDetected = EdgeDetection(processImg);
 
-				processImg.Save("." + file.Split(".")[1] + ".processed." + file.Split(".")[2]);
+				processImg.Save("." + file.Split(".")[1] + ".processed.bmp");
 			}
-			else if(File.Exists("." + file.Split(".")[1] + ".processed." + file.Split(".")[2]))
-				fileName = "." + file.Split(".")[1] + ".processed." + file.Split(".")[2];
+			else if(File.Exists("." + file.Split(".")[1] + ".processed.bmp"))
+				fileName = "." + file.Split(".")[1] + ".processed.bmp";
 			ProcessedFiles.Add(fileName);
 		}
 
 		Bitmap finalImage = (Bitmap)Image.FromFile(ProcessedFiles[l]);
 
 		for (int i = 0; i < pixels.Length; ++i)
-			pixels[i] = new byte[64];
+			pixels[i] = new byte[32];
 
 		for (int x = 0; x < finalImage.Width; x++)
 		{

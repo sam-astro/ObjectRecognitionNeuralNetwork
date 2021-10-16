@@ -257,7 +257,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         {
             Parallel.For(0, weights[i].Length, j =>
             {
-                Parallel.For(0, weights[i][j].Length, k =>
+                for (int k = 0; k < weights[i][j].Length; k++)
                 {
                     float weight = weights[i][j][k];
 
@@ -265,31 +265,36 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                     float randomNumber = new Random().Next(0, 100);
 
                     if (randomNumber <= 2f)
-                    { //if 3
-                      //randomly increase by 0% to 1%
-                        float factor = new Random().Next(0, 100) / 10000.0f;
-                        weight += factor;
+                    { //if 1
+                      //flip sign of weight
+                        weight *= -1f;
                     }
                     else if (randomNumber <= 4f)
-                    { //if 4
-                      //randomly decrease by 0% to 1%
-                        float factor = new Random().Next(-100, 100) / 10000.0f;
-                        weight -= factor;
+                    { //if 2
+                      //pick random weight between -1 and 1
+                        weight = new Random().Next(-100, 100) / 1000.0f;
+                    }
+                    else if (randomNumber <= 6f)
+                    { //if 3
+                      //randomly increase by 0% to 100%
+                        float factor = new Random().Next(0, 100) / 100.0f + 1f;
+                        weight *= factor;
                     }
                     else if (randomNumber <= 8f)
+                    { //if 4
+                      //randomly decrease by 0% to 100%
+                        float factor = new Random().Next(0, 100) / 100.0f;
+                        weight *= factor;
+                    }
+                    else if (randomNumber <= 50f)
                     { //if 5
                       //randomly increase or decrease weight by tiny amount
-                        float factor = new Random().Next(-1000, 1000) / 100.0f / 100000;
+                        float factor = new Random().Next(-1000, 1000) / 10000.0f;
                         weight += factor;
                     }
-                    //else
-                    //{
-                    //    //pick random weight between -1 and 1
-                    //    weight = new Random().Next(-100, 100) / 100.0f;
-                    //}
 
                     weights[i][j][k] = weight;
-                });
+                }
             });
         });
         //for (int i = 0; i < weights.Length; i++)

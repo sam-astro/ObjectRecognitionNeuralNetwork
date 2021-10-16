@@ -90,3 +90,4 @@ D:\Code\ObjectRecognitionNeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetConsoleC
 D:\Code\ObjectRecognitionNeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetConsoleCS.dll
 D:\Code\ObjectRecognitionNeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetConsoleCS.pdb
 D:\Code\ObjectRecognitionNeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetConsoleCS.genruntimeconfig.cache
+D:\Code\ObjectRecognitionNeuralNetwork\obj\Debug\netcoreapp3.1\NeuralNetConsoleCS.csproj.CopyComplete

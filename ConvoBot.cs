@@ -32,16 +32,16 @@ public class ConvoBot
 
 			prompt = promptObject.GetPrompt(l);
 
-			float[] inputs = new float[4096];
+			float[] inputs = new float[1024];
 
 			Parallel.For(0, prompt.Length, x =>
 			{
 				Parallel.For(0, prompt[x].Length, y =>
 				{
 					if (y == 0)
-						inputs[x] = prompt[x][y];
+						inputs[x] = prompt[x][y]/255.0f;
 					else
-						inputs[(64 * (y - 1)) + x] = prompt[x][y];
+						inputs[(32 * (y - 1)) + x] = prompt[x][y] / 255.0f;
 				});
 			});
 			//for (int x = 0; x < prompt.Length; x++)
@@ -55,7 +55,7 @@ public class ConvoBot
 			//	}
 			//}
 			float[] outputs = net.FeedForward(inputs);
-			answer = Math.Abs(outputs[0]) * 4;
+			answer = Math.Abs(outputs[0]);
 			//for (int i = 0; i < 10; i++)
 			//{
 			//	answer += Math.Abs(outputs[i]/10);
@@ -66,14 +66,14 @@ public class ConvoBot
 			{
 				amountCorrect++;
 				//net.AddFitness(Math.Clamp(answer, 0, 1000) * 100);
-				net.AddFitness(((float)100 / (float)promptObject.AmountOfPrompts()) * (float)100);
+				net.AddFitness(((float)answer*100 / (float)promptObject.AmountOfPrompts()) * (float)100);
 				confidence += answer;
 			}
 			else if (answer < 0.5f && answer > 0f && promptObject.PromptType() == "NON-HUMAN")
 			{
 				amountCorrect++;
 				//net.AddFitness(Math.Abs(Math.Clamp(1 - answer, -1000, 1)) * 100);
-				net.AddFitness(((float)100 / (float)promptObject.AmountOfPrompts()) * (float)100);
+				net.AddFitness(((float)(1f- answer)*100 / (float)promptObject.AmountOfPrompts()) * (float)100);
 				confidence += (1 - answer);
 			}
 			//if (guessScore > 95)
